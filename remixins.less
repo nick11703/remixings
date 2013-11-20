@@ -1,281 +1,209 @@
 // ===== REM UNIT MIXINS ====
-@base-font-size-px: 10; // root's font size. @base-font-size-px MUST ME AN INTEGER.
+@baseValue: 10; // root font size. @base-font-size-px MUST ME AN INTEGER.
 
+@convertPXValues: ~`convertPXValues = function(values){
+	var PXValues = '';
+	values = values.replace(/[\])}[{(]/g,'').split(',');
+	for(var i=0;i<values.length;i++)
+		PXValues += i === 0 ? getPXValue(values[i]) : ' '+getPXValue(values[i]);
+	return PXValues;
+}`;
 
-@pxtorem-js-function: ~`pxtorem = function(px){ if (typeof rmxsBaseFontSize == 'undefined')  rmxsBaseFontSize = @{base-font-size-px}; return (parseInt(px.replace(/(^\d+)(.+$)/i,'$1')) / rmxsBaseFontSize + 'rem') }`;
-
+@getPXValue: ~`getPXValue = function(a){
+	return a.indexOf('px') !== -1 ? parseInt(a.replace(/(^\d+)(.+$)/i,'$1')) / @{baseValue} + 'rem' : a;
+}`;
 
 // ===== FONT MIXINS =====
-.font-size(@value) {
-    font-size: @value;
+
+.font(@size, @family) {
+	font: @arguments;
+	font: ~`convertPXValues('@{size}')` @family;
 }
 
-.font-size(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    font-size: @rem-value;
+.font-size(@value) {
+	font-size: @arguments;
+	font-size: ~`convertPXValues('@{value}')`;
 }
 
 .line-height(@value) {
-    line-height: @value;
-}
-
-.line-height(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    line-height: @rem-value;
+	line-height: @arguments;
+	line-height: ~`convertPXValues('@{value}')`;
 }
 
 .text-indent(@value) {
-    text-indent: @value;
+	text-indent: @arguments;
+	text-indent: ~`convertPXValues('@{value}')`;
 }
 
-.text-indent(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    text-indent: @rem-value;
-}
+// ===== BORDER MIXINS =====
 
+.border(...) {
+	border: @arguments;
+	border: ~`convertPXValues('@{arguments}')`;
+}
 
 // ===== MARGIN MIXINS =====
-.margin(@value) {
-    margin: @value;
-}
 
-.margin(@vvalue, @hvalue) {
-    margin: @arguments;
-}
-
-.margin(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    margin: @rem-value;
-}
-
-.margin(@vertical, @horizontal) when (ispixel(@vertical)) and (ispixel(@horizontal)) {
-    @rem-vvalue: ~`pxtorem('@{vertical}')`;
-    @rem-hvalue: ~`pxtorem('@{horizontal}')`;
-    margin: @rem-vvalue @rem-hvalue;
-}
-
-.margin(@vertical, @horizontal) when (ispixel(@vertical)) {
-    @rem-value: ~`pxtorem('@{vertical}')`;
-    .margin(@rem-value, @horizontal);
-}
-
-.margin(@vertical, @horizontal) when (ispixel(@horizontal)) {
-    @rem-value: ~`pxtorem('@{horizontal}')`;
-    .margin(@vertical, @rem-value);
+.margin(...) {
+	margin: @arguments;
+	margin: ~`convertPXValues('@{arguments}')`;
 }
 
 .margin-top(@value) {
-    margin-top: @value;
-}
-
-.margin-top(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    margin-top: @rem-value;
+	margin-top: @arguments;
+	margin-top: ~`convertPXValues('@{value}')`;
 }
 
 .margin-right(@value) {
-    margin-right: @value;
-}
-
-.margin-right(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    margin-right: @rem-value;
+	margin-right: @arguments;
+	margin-right: ~`convertPXValues('@{value}')`;
 }
 
 .margin-bottom(@value) {
-    margin-bottom: @value;
-}
-
-.margin-bottom(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    margin-bottom: @rem-value;
+	margin-bottom: @arguments;
+	margin-bottom: ~`convertPXValues('@{value}')`;
 }
 
 .margin-left(@value) {
-    margin-left: @value;
+	margin-left: @arguments;
+	margin-left: ~`convertPXValues('@{value}')`;
 }
-
-.margin-left(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    margin-left: @rem-value;
-}
-
 
 // ===== PADDING MIXINS =====
-.padding(@value) {
-    padding: @value;
-}
 
-.padding(@vvalue, @hvalue) {
-    padding: @arguments;
-}
-
-.padding(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    padding: @rem-value;
-}
-
-.padding(@vertical, @horizontal) when (ispixel(@vertical)) and (ispixel(@horizontal)) {
-    @rem-vvalue: ~`pxtorem('@{vertical}')`;
-    @rem-hvalue: ~`pxtorem('@{horizontal}')`;
-    padding: @rem-vvalue @rem-hvalue;
-}
-
-.padding(@vertical, @horizontal) when (ispixel(@vertical)) {
-    @rem-value: ~`pxtorem('@{vertical}')`;
-    .padding(@rem-value, @horizontal);
-}
-
-.padding(@vertical, @horizontal) when (ispixel(@horizontal)) {
-    @rem-value: ~`pxtorem('@{horizontal}')`;
-    .padding(@vertical, @rem-value);
+.padding(...) {
+	padding: @arguments;
+	padding: ~`convertPXValues('@{arguments}')`;
 }
 
 .padding-top(@value) {
-    padding-top: @value;
-}
-
-.padding-top(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    padding-top: @rem-value;
+	padding-top: @arguments;
+	padding-top: ~`convertPXValues('@{value}')`;
 }
 
 .padding-right(@value) {
-    padding-right: @value;
-}
-
-.padding-right(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    padding-right: @rem-value;
+	padding-right: @arguments;
+	padding-right: ~`convertPXValues('@{value}')`;
 }
 
 .padding-bottom(@value) {
-    padding-bottom: @value;
-}
-
-.padding-bottom(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    padding-bottom: @rem-value;
+	padding-bottom: @arguments;
+	padding-bottom: ~`convertPXValues('@{value}')`;
 }
 
 .padding-left(@value) {
-    padding-left: @value;
+	padding-left: @arguments;
+	padding-left: ~`convertPXValues('@{value}')`;
 }
 
-.padding-left(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    padding-left: @rem-value;
-}
+// ===== HEIGHT & WIDTH MIXINS =====
 
-
-// ===== POSITION MIXINS =====
 .height(@value) {
-    height: @value;
-}
-
-.height(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    height: @rem-value;
+	height: @arguments;
+	height: ~`convertPXValues('@{value}')`;
 }
 
 .min-height(@value) {
-    min-height: @value;
-}
-
-.min-height(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    min-height: @rem-value;
+	min-height: @arguments;
+	min-height: ~`convertPXValues('@{value}')`;
 }
 
 .max-height(@value) {
-    max-height: @value;
+	max-height: @arguments;
+	max-height: ~`convertPXValues('@{value}')`;
 }
-
-.max-height(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    max-height: @rem-value;
-}
-
 
 .width(@value) {
-    width: @value;
-}
-
-.width(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    width: @rem-value;
+	width: @arguments;
+	width: ~`convertPXValues('@{value}')`;
 }
 
 .min-width(@value) {
-    min-width: @value;
-}
-
-.min-width(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    min-width: @rem-value;
+	min-width: @arguments;
+	min-width: ~`convertPXValues('@{value}')`;
 }
 
 .max-width(@value) {
-    max-width: @value;
+	max-width: @arguments;
+	max-width: ~`convertPXValues('@{value}')`;
 }
 
-.max-width(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    max-width: @rem-value;
-}
+// ===== POSITION MIXINS =====
 
 .top(@value) {
-    top: @value;
-}
-
-.top(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    top: @rem-value;
+	top: @arguments;
+	top: ~`convertPXValues('@{value}')`;
 }
 
 .left(@value) {
-    left: @value;
-}
-
-.left(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    left: @rem-value;
+	left: @arguments;
+	left: ~`convertPXValues('@{value}')`;
 }
 
 .right(@value) {
-    right: @value;
-}
-
-.right(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    right: @rem-value;
+	right: @arguments;
+	right: ~`convertPXValues('@{value}')`;
 }
 
 .bottom(@value) {
-    bottom: @value;
-}
-
-.bottom(@value) when (ispixel(@value)) {
-    @rem-value: ~`pxtorem('@{value}')`;
-    bottom: @rem-value;
+	bottom: @arguments;
+	bottom: ~`convertPXValues('@{value}')`;
 }
 
 
 /*
+Sample Case
+
 .rem-mixins-test-class {
-    .font-size(10px);
-    .line-height(20px);
-    .margin(10px);
-    .margin(3em);
-    .margin(10px, 20px);
-    .margin(10px, 20%);
-    .margin(0px , 20px);
-    .margin-top(2%);
-    .margin-top(2px);
-    .padding(10px);
-    .padding(3em);
-    .padding(10px, 20px);
-    .padding(10px, 20%);
-    .padding(3em, 20px)
+	.font-size(10px);
+	.line-height(20px);
+	.margin(10px);
+	.margin(3em);
+	.margin(10px, 20px);
+	.margin(10px, 20%);
+	.margin(0px , 20px);
+	.margin(5px , auto, 3%, 15px);
+	.margin-top(2%);
+	.margin-top(2px);
+	.padding(10px);
+	.padding(3em);
+	.padding(10px, 20px);
+	.padding(10px, 20%);
+	.padding(3em, 20px);
+	.padding(3em, 20px, 15px, 30px);
+}
+
+The above will produce this...
+
+.rem-mixins-test-class {
+	font-size: 10px;
+	font-size: 1rem;
+	line-height: 20px;
+	line-height: 2rem;
+	margin: 10px;
+	margin: 1rem;
+	margin: 3em;
+	margin: 10px 20px;
+	margin: 1rem 2rem;
+	margin: 10px 20%;
+	margin: 1rem  20%;
+	margin: 0px 20px;
+	margin: 0rem 2rem;
+	margin: 5px auto 3% 15px;
+	margin: 0.5rem  auto  3% 1.5rem;
+	margin-top: 2%;
+	margin-top: 2px;
+	margin-top: 0.2rem;
+	padding: 10px;
+	padding: 1rem;
+	padding: 3em;
+	padding: 10px 20px;
+	padding: 1rem 2rem;
+	padding: 10px 20%;
+	padding: 1rem  20%;
+	padding: 3em 20px;
+	padding: 3em 2rem;
+	padding: 3em 20px 15px 30px;
+	padding: 3em 2rem 1.5rem 3rem;
 }
 */

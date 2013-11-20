@@ -15,7 +15,7 @@ Mixins available for the following CSS properties:
 
 #### How to use it:
 1. Download remixins.less
-2. Set `@base-font-size-px` (line 2) to your integer root's font size. Note that `@base-font-size-px` **MUST BE AN INTEGER** (without any measure unit).
+2. Set `@baseValue` (line 2) to your integer root's font size. Note that `@baseValue` **MUST BE AN INTEGER** (without any measure unit).
 3. Import downloaded file `@import "remixins.less`.
 
 ### Examples:
@@ -48,17 +48,17 @@ Mixins available for the following CSS properties:
 ```
 
 ### Included mixins
+* `.font-size(@size, @family)`
 * `.font-size(@value)`
 * `.line-height(@value)`
 * `.text-indent(@value)`
-* `.margin(@value)`
-* `.margin(@vertical, @horizontal)`
+* `.border(...)`
+* `.margin(...)`
 * `.margin-top(@value)`
 * `.margin-right(@value)`
 * `.margin-bottom(@value)`
 * `.margin-left(@value)`
-* `.padding(@value)`
-* `.padding(@vertical, @horizontal)`
+* `.padding(...)`
 * `.padding-top(@value)`
 * `.padding-right(@value)`
 * `.padding-bottom(@value)`
@@ -74,4 +74,4 @@ Mixins available for the following CSS properties:
 * `.bottom(@value)`
 * `.right(@value)`
 
-**@chrRamirez**
+**@nick11703**
