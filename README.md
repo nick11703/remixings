@@ -6,16 +6,22 @@ remixins is a collection of **{less}** mixins that helps you start using rem uni
 
 remixins includes **{less}** mixins for most popular properties where rem is used as a measure unit.
 
+All non pixel values will be ignored so you can pass values when using css shorthand. examples and cheat sheet are included at top of less file.
+
 Mixins available for the following CSS properties:  
- * `font-size`, `line-height` and `text-indent`.  
- * `margin`(s)  
- * `padding`(s)  
- * `height` and `width` (including min- and max-)  
- * `top`, `left`, `bottom` and `right`.  
+ * FONTS: `font-size`, `line-height`, `text-indent` and `letter-spacing`
+ * BORDERS & OUTLINES: `border-size`, `border` and `outline`
+ * BORDER RADIUS: `border-radius`
+ * MARGINS: `margin`(s)
+ * PADDINGS: `padding`(s)
+ * HEIGHTS & WIDTHS: `height` and `width` (including min- and max-)
+ * POSITIONING: `top`, `left`, `bottom` and `right`
+ * BACKGROUNDS: `background-size`, `background`
+ * SHADOWS: `box-shadow` and `text-shadow`
 
 #### How to use it:
 1. Download remixins.less
-2. Set `@baseValue` (line 2) to your integer root's font size. Note that `@baseValue` **MUST BE AN INTEGER** (without any measure unit).
+2. Set `@baseValue` (line 95) to your integer root's font size. Note that `@baseValue` **MUST BE AN INTEGER** (without any measure unit).
 3. Import downloaded file `@import "remixins.less`.
 
 ### Examples:
@@ -48,11 +54,23 @@ Mixins available for the following CSS properties:
 ```
 
 ### Included mixins
-* `.font-size(@size, @family)`
 * `.font-size(@value)`
 * `.line-height(@value)`
 * `.text-indent(@value)`
+* `.letter-spacing(@value)`
+* `.border-size(@value)`
 * `.border(...)`
+* `.border-top(@value)`
+* `.border-bottom(@value)`
+* `.border-left(@value)`
+* `.border-right(@value)`
+* `.outline(...)`
+* `.outline-width(@value)`
+* `.border-radius(...)`
+* `.border-top-left-radius(@value)`
+* `.border-top-right-radius(@value)`
+* `.border-bottom-left-radius(@value)`
+* `.border-bottom-right-radius(@value)`
 * `.margin(...)`
 * `.margin-top(@value)`
 * `.margin-right(@value)`
@@ -73,5 +91,10 @@ Mixins available for the following CSS properties:
 * `.left(@value)`
 * `.bottom(@value)`
 * `.right(@value)`
+* `.background-size(...)`
+* `.background(...)`
+* `.box-shadow(...)`
+* `.text-shadow(...)`
 
 **@nick11703**
+**@kaseybon**
